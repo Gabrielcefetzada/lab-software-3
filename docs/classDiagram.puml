@@ -1,0 +1,64 @@
+@startuml
+class Usuario {
+    - nome: String
+    - cpf: String
+    - email: String
+    - senha: String
+    + autenticar(): Boolean
+}
+
+class Aluno extends Usuario {
+    - rg: String
+    - endereco: String
+    - instituicao: Instituicao
+    - curso: String
+    - saldoMoedas: int
+    + receberMoedas(int qtd, Professor, String motivo)
+    + trocarMoedas(int qtd, Vantagem)
+    + consultarExtrato(): List<Transacao>
+}
+
+class Professor extends Usuario {
+    - departamento: String
+    - instituicao: Instituicao
+    - saldoMoedas: int
+    + enviarMoedas(int qtd, Aluno, String motivo)
+    + consultarExtrato(): List<Transacao>
+}
+
+class Instituicao {
+    - nome: String
+    - endereco: String
+    + listarProfessores(): List<Professor>
+    + listarAlunos(): List<Aluno>
+}
+
+class EmpresaParceira {
+    - nome: String
+    - cnpj: String
+    - vantagens: List<Vantagem>
+    + cadastrarVantagem(String descricao, int custo, String foto)
+    + enviarEmailConfirmacao(Aluno, Vantagem)
+}
+
+class Vantagem {
+    - descricao: String
+    - custo: int
+    - foto: String
+    + resgatar(Aluno)
+}
+
+class Transacao {
+    - data: Date
+    - tipo: String
+    - valor: int
+    - descricao: String
+}
+
+Aluno "1" -- "1" Instituicao
+Professor "1" -- "1" Instituicao
+Professor "1" -- "*" Transacao : realiza >
+Aluno "1" -- "*" Transacao : recebe >
+Aluno "*" -- "*" Vantagem : troca >
+EmpresaParceira "1" -- "*" Vantagem
+@enduml
