@@ -64,4 +64,3 @@
 **Como** um usuário do sistema (aluno, professor ou empresa parceira),  
 **Eu quero** realizar login no sistema utilizando email e senha,  
 **Para que** eu possa acessar as funcionalidades específicas do sistema com segurança.
-"""
