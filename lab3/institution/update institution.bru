@@ -1,0 +1,18 @@
+meta {
+  name: update institution
+  type: http
+  seq: 2
+}
+
+patch {
+  url: {{url}}/instituicao/3
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "nome": "LOS POLLOS H LTDA",
+    "cnpj": "56490571000106"
+  }
+}
