@@ -7,7 +7,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Usuario } from '../entities/usuario.entity';
 import { Repository } from 'typeorm';
 import { CreateUsuarioDto } from '../dto/createUsuario.dto';
-import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsuarioService {
@@ -18,20 +17,10 @@ export class UsuarioService {
 
   async createUser(createUserDto: CreateUsuarioDto): Promise<Usuario> {
     try {
-      createUserDto.password = await bcrypt.hash(createUserDto.password, 10);
       const user = this.usuarioRepository.create(createUserDto);
       return await this.usuarioRepository.save(user);
     } catch (error) {
       throw new BadRequestException('Error creating user');
-    }
-  }
-
-  async createUsers(createUserDto: CreateUsuarioDto[]): Promise<Usuario[]> {
-    try {
-      const users = this.usuarioRepository.create(createUserDto);
-      return await this.usuarioRepository.save(users);
-    } catch (error) {
-      throw new BadRequestException('Error creating users');
     }
   }
 
@@ -49,17 +38,12 @@ export class UsuarioService {
 
   async findUserById(id: number): Promise<Usuario | undefined> {
     try {
-      return await this.usuarioRepository.findOne({ where: { id: id } });
-    } catch (error) {
-      throw new NotFoundException('User not found');
-    }
-  }
+      const user =  await this.usuarioRepository.findOne({ where: { id: id } });
 
-  async findUserByUsername(username: string): Promise<Usuario | undefined> {
-    try {
-      return await this.usuarioRepository.findOne({
-        where: { username: username },
-      });
+      if (!user) {
+        throw new NotFoundException('User not found');
+      }
+      return user;
     } catch (error) {
       throw new NotFoundException('User not found');
     }
@@ -70,18 +54,30 @@ export class UsuarioService {
     updateUserDto: Partial<Usuario>,
   ): Promise<Usuario | undefined> {
     try {
+      const user = await this.findUserById(id);
+
+      if (!user) {
+        throw new BadRequestException('User not found');
+      }
+
       await this.usuarioRepository.update(id, updateUserDto);
       return await this.findUserById(id);
     } catch (error) {
-      throw new BadRequestException('Error updating user');
+      throw new BadRequestException('Error');
     }
   }
 
   async deleteUser(id: number): Promise<void> {
     try {
+      const user = await this.findUserById(id);
+
+      if (!user) {
+        throw new BadRequestException('User not found');
+      }
+      
       await this.usuarioRepository.delete(id);
     } catch (error) {
-      throw new BadRequestException('Error deleting user');
+      throw new BadRequestException('Error');
     }
   }
 }

@@ -1,0 +1,23 @@
+meta {
+  name: get by id
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{url}}/usuarios/6
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "nome": "Luísa Borges",
+    "cpf": "15148677619",
+    "rg": "16407125",
+    "email":"lila123@gmail.com",
+    "endereco": "Rua dos bobo",
+    "curso": "Farmácia",
+    "instituicao": 3
+  }
+}

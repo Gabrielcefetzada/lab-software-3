@@ -1,0 +1,23 @@
+meta {
+  name: create user
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{url}}/usuarios
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "nome": "Luísa Couto",
+    "cpf": "15148677619",
+    "rg": "16407125",
+    "email":"lila123@gmail.com",
+    "endereco": "Rua dos bobo",
+    "curso": "Farmácia",
+    "instituicao": 7
+  }
+}

@@ -1,14 +1,26 @@
-import { IsNotEmpty, IsEmail, MinLength } from 'class-validator';
+import { IsNotEmpty, IsEmail } from 'class-validator';
+import { Instituicao } from 'src/modules/instituicao/entities/instituicao.entity';
 
 export class CreateUsuarioDto {
   @IsNotEmpty()
-  username: string;
+  nome: string;
 
   @IsNotEmpty()
   @IsEmail()
   email: string;
 
   @IsNotEmpty()
-  @MinLength(6)
-  password: string;
+  cpf: string;
+
+  @IsNotEmpty()
+  rg: string;
+
+  @IsNotEmpty()
+  endereco: string;
+
+  @IsNotEmpty()
+  curso: string;
+
+  @IsNotEmpty()
+  instituicao: Instituicao;
 }

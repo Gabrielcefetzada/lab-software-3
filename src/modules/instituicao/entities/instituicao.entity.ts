@@ -1,9 +1,11 @@
+import { Usuario } from 'src/modules/usuario/entities/usuario.entity';
 import {
     Entity,
     PrimaryGeneratedColumn,
     Column,
     CreateDateColumn,
     UpdateDateColumn,
+    OneToMany,
   } from 'typeorm';
   
   @Entity('instituicao')
@@ -16,6 +18,9 @@ import {
 
     @Column({ length: 14 })
     cnpj: string;
+
+    @OneToMany(() => Usuario, (user) => user.instituicao)
+    usuarios?: Usuario[] | null; 
   
     @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     createdAt: Date;

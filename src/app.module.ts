@@ -3,8 +3,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsuarioModule } from './modules/usuario/usuario.module';
-import { AuthModule } from './modules/auth/auth.module';
-import { UsersSeeder } from './seeder/users-seeder.config';
 import { Usuario } from './modules/usuario/entities/usuario.entity';
 import { InstituicaoModule } from './modules/instituicao/instituicao.module';
 import { Instituicao } from './modules/instituicao/entities/instituicao.entity';
@@ -22,11 +20,10 @@ import { Instituicao } from './modules/instituicao/entities/instituicao.entity';
       autoLoadEntities: true,
       synchronize: true,
     }),
-    AuthModule,
     UsuarioModule,
     InstituicaoModule
   ],
   controllers: [AppController],
-  providers: [AppService, UsersSeeder],
+  providers: [AppService],
 })
 export class AppModule {}

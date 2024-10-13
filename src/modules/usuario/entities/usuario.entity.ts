@@ -1,9 +1,11 @@
+import { Instituicao } from 'src/modules/instituicao/entities/instituicao.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
 } from 'typeorm';
 
 @Entity('usuario')
@@ -11,20 +13,26 @@ export class Usuario {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 50 })
-  username: string;
+  @Column({ length: 100 })
+  nome: string;
 
   @Column({ length: 100 })
   email: string;
 
+  @Column({ length: 11 })
+  cpf: string;
+
   @Column({ length: 255 })
-  password: string;
+  rg: string;
 
-  @Column({ nullable: true })
-  profilePicture: string;
+  @Column({ length: 255 })
+  endereco: string;
 
-  @Column({ nullable: true, length: 255 })
-  profileDescription: string;
+  @Column({ length: 255 })
+  curso: string;
+
+  @ManyToOne(() => Instituicao, (isntitution) => isntitution.usuarios, { eager: true })
+  instituicao: Instituicao;
 
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
