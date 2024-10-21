@@ -17,10 +17,22 @@ export class UsuarioService {
 
   async createUser(createUserDto: CreateUsuarioDto): Promise<Usuario> {
     try {
+      const userExists = await this.usuarioRepository.findOne({
+        where: [
+          { cpf: createUserDto.cpf },
+          { email: createUserDto.email }
+        ]
+      });
+      
+      if (userExists) {
+        throw new BadRequestException('User with this cpf and/or email already exists');
+      }
       const user = this.usuarioRepository.create(createUserDto);
       return await this.usuarioRepository.save(user);
-    } catch (error) {
-      throw new BadRequestException('Error creating user');
+    } 
+    
+    catch (error) {
+      throw new BadRequestException(error.message);
     }
   }
 
