@@ -1,9 +1,7 @@
-
 @startuml
 actor "Aluno" as aluno
 actor "Professor" as professor
 actor "Empresa Parceira" as empresa
-actor "Sistema" as sistema
 
 aluno --> (Cadastro de Aluno)
 aluno --> (Selecionar Instituição)
@@ -21,8 +19,4 @@ empresa --> (Cadastro de Vantagem)
 aluno --> (Login e Autenticação)
 professor --> (Login e Autenticação)
 empresa --> (Login e Autenticação)
-
-sistema --> (Enviar Notificação de Moedas Recebidas)
-sistema --> (Enviar Notificação de Resgate de Vantagem)
-
 @enduml
