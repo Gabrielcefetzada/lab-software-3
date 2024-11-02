@@ -7,7 +7,6 @@ import {
   Put,
   Delete,
   Query,
-  UseGuards,
   Logger,
 } from '@nestjs/common';
 import { UsuarioService } from '../service/usuario.service';
@@ -54,5 +53,17 @@ export class UsuarioController {
   async deleteUser(@Param('id') id: string) {
     this.logger.log('Delete user with id:', id);
     return this.usuarioService.deleteUser(+id);
+  }
+
+  @Get('extrato/:id')
+  async getUserTransactions(@Param('id') id: string) {
+    this.logger.log('getUserTransactions by id:', id);
+    return this.usuarioService.getUserTransactions(+id);
+  }
+
+  @Get('balance/:id')
+  async getUserBalance(@Param('id') id: string) {
+    this.logger.log('getUserBalance by id:', id);
+    return this.usuarioService.getUserBalance(+id);
   }
 }

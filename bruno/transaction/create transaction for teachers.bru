@@ -1,0 +1,21 @@
+meta {
+  name: create transaction for teachers
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3000/transacoes/professor
+  body: json
+  auth: none
+}
+
+headers {
+  content-type: application/json
+}
+
+body:json {
+  { 
+    "senha": "123"
+  }
+}

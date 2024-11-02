@@ -6,6 +6,8 @@ import { UsuarioModule } from './modules/usuario/usuario.module';
 import { Usuario } from './modules/usuario/entities/usuario.entity';
 import { InstituicaoModule } from './modules/instituicao/instituicao.module';
 import { Instituicao } from './modules/instituicao/entities/instituicao.entity';
+import { Transacao } from './modules/transacao/entities/transacao.entity';
+import { TransacaoModule } from './modules/transacao/transacao.module';
 
 @Module({
   imports: [
@@ -16,12 +18,13 @@ import { Instituicao } from './modules/instituicao/entities/instituicao.entity';
       username: process.env.POSTGRES_USER || 'user',
       password: process.env.POSTGRES_PASSWORD || 'password',
       database: process.env.POSTGRES_DB || 'postgres',
-      entities: [Usuario, Instituicao],
+      entities: [Usuario, Instituicao, Transacao],
       autoLoadEntities: true,
       synchronize: true,
     }),
     UsuarioModule,
-    InstituicaoModule
+    InstituicaoModule,
+    TransacaoModule
   ],
   controllers: [AppController],
   providers: [AppService],
