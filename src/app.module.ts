@@ -8,6 +8,8 @@ import { InstituicaoModule } from './modules/instituicao/instituicao.module';
 import { Instituicao } from './modules/instituicao/entities/instituicao.entity';
 import { Transacao } from './modules/transacao/entities/transacao.entity';
 import { TransacaoModule } from './modules/transacao/transacao.module';
+import { VantagemModule } from './modules/vantagem/vantagem.module';
+import { Vantagem } from './modules/vantagem/entities/vantagem.entity';
 
 @Module({
   imports: [
@@ -18,13 +20,14 @@ import { TransacaoModule } from './modules/transacao/transacao.module';
       username: process.env.POSTGRES_USER || 'user',
       password: process.env.POSTGRES_PASSWORD || 'password',
       database: process.env.POSTGRES_DB || 'postgres',
-      entities: [Usuario, Instituicao, Transacao],
+      entities: [Usuario, Instituicao, Transacao, Vantagem],
       autoLoadEntities: true,
       synchronize: true,
     }),
     UsuarioModule,
     InstituicaoModule,
-    TransacaoModule
+    TransacaoModule,
+    VantagemModule
   ],
   controllers: [AppController],
   providers: [AppService],

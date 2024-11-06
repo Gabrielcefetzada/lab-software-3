@@ -1,4 +1,5 @@
 import { Usuario } from 'src/modules/usuario/entities/usuario.entity';
+import { Vantagem } from 'src/modules/vantagem/entities/vantagem.entity';
 import {
     Entity,
     PrimaryGeneratedColumn,
@@ -20,7 +21,10 @@ import {
     cnpj: string;
 
     @OneToMany(() => Usuario, (user) => user.instituicao)
-    usuarios?: Usuario[] | null; 
+    usuarios?: Usuario[] | null;
+    
+    @OneToMany(() => Vantagem, (vantagem) => vantagem.instituicao)
+    vantagens?: Vantagem[] | null;
   
     @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     createdAt: Date;

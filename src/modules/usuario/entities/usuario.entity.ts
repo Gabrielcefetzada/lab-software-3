@@ -1,5 +1,6 @@
 import { Instituicao } from 'src/modules/instituicao/entities/instituicao.entity';
 import { Transacao } from 'src/modules/transacao/entities/transacao.entity';
+import { Vantagem } from 'src/modules/vantagem/entities/vantagem.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -8,6 +9,7 @@ import {
   UpdateDateColumn,
   ManyToOne,
   OneToMany,
+  ManyToMany,
 } from 'typeorm';
 
 @Entity('usuario')
@@ -41,6 +43,9 @@ export class Usuario {
 
   @OneToMany(() => Transacao, (transacao) => transacao.beneficiario)
   transacoesComoBeneficiario: Transacao[];
+  
+  @ManyToMany(() => Vantagem, (vantagem) => vantagem.beneficiarios)
+  vantagensComoBeneficiario: Vantagem[];
 
   @Column({default: 0})
   saldo: number;

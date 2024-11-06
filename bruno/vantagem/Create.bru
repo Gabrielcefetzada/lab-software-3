@@ -1,0 +1,19 @@
+meta {
+  name: Create
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{url}}/vantagens
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "nome": "DESCONTO CINEMA",
+    "instituicao": 1,
+    "cost": 300
+  }
+}

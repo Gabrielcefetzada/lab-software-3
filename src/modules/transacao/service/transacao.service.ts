@@ -39,6 +39,10 @@ export class TransacaoService {
         throw new BadRequestException('Professores não podem transferir para outros professores ou para si mesmos');
       }
 
+      if (!isPayerProfessor && userPayer.nome != "System") {
+        throw new BadRequestException('Alunos não podem fazer transferência');
+      }
+
       const transacao = this.transacaoRepository.create(
         {
           ...createTransacaoDto,
@@ -47,7 +51,6 @@ export class TransacaoService {
         });
 
       await this.transacaoRepository.save(transacao);
-      console.log(userPayer, userBeneficiary)
 
       await this.updateUserBalances(userPayer, userBeneficiary, createTransacaoDto.valor);
 

@@ -1,3 +1,4 @@
+import { Instituicao } from 'src/modules/instituicao/entities/instituicao.entity';
 import { Usuario } from 'src/modules/usuario/entities/usuario.entity';
 import {
   Entity,
@@ -6,24 +7,27 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 
-@Entity('transacao')
-export class Transacao {
+@Entity('vantagem')
+export class Vantagem {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Usuario, usuario => usuario.transacoesComoPagador, { eager: true })
-  pagador: Usuario;
+  @ManyToOne(() => Instituicao, (instituicao) => instituicao.vantagens, { eager: true })
+  instituicao: Instituicao;
 
-  @ManyToOne(() => Usuario, usuario => usuario.transacoesComoBeneficiario, { eager: true })
-  beneficiario: Usuario;
-
-  @Column({ default: 0 })
-  valor: number;
+  @ManyToMany(() => Usuario, (usuario) => usuario.vantagensComoBeneficiario, { eager: true })
+  @JoinTable()
+  beneficiarios: Usuario[];
 
   @Column({ length: 255 })
-  motivo: string;
+  nome: string;
+
+  @Column()
+  cost: number;
   
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
