@@ -1,0 +1,16 @@
+@startuml
+actor Professor as professor
+actor Aluno as aluno
+participant "Sistema" as sistema
+participant "Transacao" as transacao
+
+professor -> sistema: autenticar(email, senha)
+sistema --> professor: autenticação bem-sucedida
+
+professor -> sistema: enviarMoedas(aluno, qtd, motivo)
+sistema -> aluno: receberMoedas(qtd, professor, motivo)
+aluno -> transacao: registrarTransacao(data, tipo, valor, descricao)
+
+sistema --> professor: confirmação do envio
+sistema --> aluno: notificação de recebimento
+@enduml
