@@ -61,7 +61,6 @@ export class TransacaoService {
   }
 
   private async updateUserBalances(userPayer: Usuario, userBeneficiary: Usuario, valor: number): Promise<void> {
-    console.log(userPayer)
     if (userPayer.saldo < valor) {
       throw new BadRequestException('Saldo insuficiente para realizar a transação');
     }

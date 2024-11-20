@@ -7,6 +7,7 @@ import {
 } from '@nestjs/common';
 import { VantagemService } from '../service/vantagem.service';
 import { CreateVantagemDto } from '../dto/createVantagem.dto';
+import { BuyVantagemDto } from '../dto/buyVantagem.dto';
 
 @Controller('vantagens')
 export class VantagemController {
@@ -15,7 +16,7 @@ export class VantagemController {
   private readonly logger = new Logger(VantagemController.name);
 
   @Post()
-  async createTransacao(@Body() createVantagemDto: CreateVantagemDto) {
+  async createVantagem(@Body() createVantagemDto: CreateVantagemDto) {
     this.logger.log('Create Vantagem');
     return await this.vantagemService.createVantagem(createVantagemDto);
   }
@@ -24,5 +25,11 @@ export class VantagemController {
   async getAllVantagens() {
     this.logger.log('Get all vantagens');
     return await this.vantagemService.getAllVantagens();
+  }
+
+  @Post('/buy')
+  async buyVantagem(@Body() buyVantagemDto: BuyVantagemDto) {
+    this.logger.log('Buy Vantagem');
+    return await this.vantagemService.buyVantagem(buyVantagemDto);
   }
 }
