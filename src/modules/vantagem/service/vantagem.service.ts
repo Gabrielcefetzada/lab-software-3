@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Injectable,
   NotFoundException,
+  ServiceUnavailableException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -10,6 +11,7 @@ import { CreateVantagemDto } from '../dto/createVantagem.dto';
 import { Usuario } from 'src/modules/usuario/entities/usuario.entity';
 import { Instituicao } from 'src/modules/instituicao/entities/instituicao.entity';
 import { BuyVantagemDto } from '../dto/buyVantagem.dto';
+import { MailService } from 'src/modules/mail/mail.service';
 
 @Injectable()
 export class VantagemService {
@@ -20,6 +22,7 @@ export class VantagemService {
     private readonly instituicaoRepository: Repository<Instituicao>,
     @InjectRepository(Usuario)
     private readonly usuarioRepository: Repository<Usuario>,
+    private readonly mailService: MailService
   ) {}
 
   async createVantagem(createVantagemDto: CreateVantagemDto): Promise<Vantagem> {
@@ -90,18 +93,31 @@ export class VantagemService {
   
       await queryRunner.commitTransaction();
 
-      // fazer envios de e-mail
+      const code = this.generateCode();
+
+      this.mailService.sendVantagemCode(user, code, vantagemToBeBought);
+      this.mailService.sendVantagemCodeToInstituicao(vantagemToBeBought.instituicao, code, user)
   
       return {
         message: 'Vantagem adquirida com sucesso. Você receberá um e-mail com o código de resgate.'
       };
   
     } catch (error) {
+
       await queryRunner.rollbackTransaction();
-      throw new BadRequestException(error.message);
+
+      if (error instanceof ServiceUnavailableException){
+        console.log('nothing')
+      } else {
+        throw new BadRequestException(error.message);
+      }
     } finally {
       await queryRunner.release();
     }
+  }
+
+  private generateCode() {
+    return 'PROMOTIONCODE' + Math.ceil(Math.random() * 100000)
   }
 }
   

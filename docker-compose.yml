@@ -30,6 +30,7 @@ services:
       - postgres
     volumes:
       - ./src:/app/src
+      - ./dist:/app/dist
 
 volumes:
   postgres:
