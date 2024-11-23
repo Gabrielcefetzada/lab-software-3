@@ -1,14 +1,14 @@
 import {
   Controller,
-  Get,
   Post,
   Body,
-  Param,
   Logger,
+  UseGuards
 } from '@nestjs/common';
 import { TransacaoService } from '../service/transacao.service';
 import { CreateTransacaoDto } from '../dto/createTransacao.dto';
 import { CreateTransacaoProfessoresDto } from '../dto/createTransacaoProfessores.dto';
+import { AuthGuard } from 'src/modules/auth/guard/auth.guard';
 
 @Controller('transacoes')
 export class TransacaoController {
@@ -16,12 +16,14 @@ export class TransacaoController {
 
   private readonly logger = new Logger(TransacaoController.name);
 
+  @UseGuards(AuthGuard)
   @Post()
   async createTransacao(@Body() createTransacaoDto: CreateTransacaoDto) {
     this.logger.log('Create transaction');
     return await this.transacaoService.createTransaction(createTransacaoDto);
   }
 
+  @UseGuards(AuthGuard)
   @Post('/professor')
   async createTransacaoProfessor(@Body() createTransacaoDto: CreateTransacaoProfessoresDto) {
     this.logger.log('Create transaction for teacher');

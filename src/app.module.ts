@@ -10,6 +10,7 @@ import { Transacao } from './modules/transacao/entities/transacao.entity';
 import { TransacaoModule } from './modules/transacao/transacao.module';
 import { VantagemModule } from './modules/vantagem/vantagem.module';
 import { Vantagem } from './modules/vantagem/entities/vantagem.entity';
+import { AuthModule } from './modules/auth/module/auth.module';
 
 @Module({
   imports: [
@@ -27,7 +28,8 @@ import { Vantagem } from './modules/vantagem/entities/vantagem.entity';
     UsuarioModule,
     InstituicaoModule,
     TransacaoModule,
-    VantagemModule
+    VantagemModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],

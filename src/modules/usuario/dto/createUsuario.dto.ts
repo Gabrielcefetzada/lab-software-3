@@ -10,6 +10,9 @@ export class CreateUsuarioDto {
   email: string;
 
   @IsNotEmpty()
+  password: string;
+
+  @IsNotEmpty()
   cpf: string;
 
   @IsNotEmpty()

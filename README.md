@@ -17,6 +17,12 @@ $ docker compose build
 $ docker compose up
 ```
 
+## Instalar dependências
+
+```bash
+$ npm i
+```
+
 ## Gerar pasta buildada da aplicação (dist)
 
 Para o correto funcionamento do envio dos e-mails, é necessário que geremos o build da aplicação nest localmente.

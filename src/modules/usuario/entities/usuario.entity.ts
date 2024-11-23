@@ -50,6 +50,9 @@ export class Usuario {
   @Column({default: 0})
   saldo: number;
 
+  @Column({ length: 255, default: 'PASSWORD' })
+  password: string;
+
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 

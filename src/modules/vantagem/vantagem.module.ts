@@ -10,7 +10,7 @@ import { MailModule } from '../mail/mail.module';
 @Module({
   imports: [
     TypeOrmModule.forFeature([Vantagem, Usuario, Instituicao]),
-    MailModule, // Adicione aqui o MailModule
+    MailModule,
   ],
   providers: [VantagemService],
   controllers: [VantagemController],

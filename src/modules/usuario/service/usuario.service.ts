@@ -75,6 +75,19 @@ export class UsuarioService {
     }
   }
 
+  async findUserByEmail(email: string): Promise<Usuario | undefined> {
+    try {
+      const user =  await this.usuarioRepository.findOne({ where: { email: email } });
+
+      if (!user) {
+        throw new NotFoundException('User not found');
+      }
+      return user;
+    } catch (error) {
+      throw new NotFoundException('User not found');
+    }
+  }
+
   async findSystemUser(): Promise<Usuario | undefined> {
     try {
       const user =  await this.usuarioRepository.findOne({ where: { nome: "System" } });
