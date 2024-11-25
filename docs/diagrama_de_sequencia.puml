@@ -1,16 +1,45 @@
 @startuml
-actor Professor as professor
-actor Aluno as aluno
-participant "Sistema" as sistema
-participant "Transacao" as transacao
+actor "Aluno" as Aluno
+actor "Professor" as Professor
+actor "Empresa" as Empresa
+entity "Sistema" as Sistema
 
-professor -> sistema: autenticar(email, senha)
-sistema --> professor: autenticação bem-sucedida
+' Cadastro do aluno
+Aluno -> Sistema: Cadastrar(nome, email, CPF, RG, endereço, instituição, curso)
+Sistema --> Aluno: Confirmação de Cadastro
 
-professor -> sistema: enviarMoedas(aluno, qtd, motivo)
-sistema -> aluno: receberMoedas(qtd, professor, motivo)
-aluno -> transacao: registrarTransacao(data, tipo, valor, descricao)
+' Login no sistema
+Aluno -> Sistema: Autenticar(usuario, senha)
+Sistema --> Aluno: Autenticação bem-sucedida
 
-sistema --> professor: confirmação do envio
-sistema --> aluno: notificação de recebimento
+' Distribuição de moedas pelo professor
+Professor -> Sistema: DistribuirMoedas(idAluno, quantidade, mensagem)
+alt Saldo Suficiente
+    Sistema -> Aluno: Notificar por Email
+    note right of Sistema: Atualiza o saldo do aluno internamente
+else Saldo Insuficiente
+    Sistema --> Professor: Erro (Saldo Insuficiente)
+end
+
+' Consulta de extrato (aluno)
+Aluno -> Sistema: ConsultarExtrato()
+Sistema --> Aluno: Detalhes das Transações
+
+' Consulta de extrato (professor)
+Professor -> Sistema: ConsultarExtrato()
+Sistema --> Professor: Detalhes das Transações
+
+' Resgate de vantagens pelo aluno
+Aluno -> Sistema: ResgatarVantagem(vantagemId)
+alt Saldo Suficiente
+    Sistema -> Aluno: Enviar Email com Cupom
+    Sistema -> Empresa: Notificar Resgate (com Código)
+    note right of Sistema: Atualiza o saldo do aluno internamente
+else Saldo Insuficiente
+    Sistema --> Aluno: Erro (Saldo Insuficiente)
+end
+
+' Cadastro de vantagens pela empresa
+Empresa -> Sistema: CadastrarVantagem(descrição, custo, foto)
+Sistema --> Empresa: Confirmação de Cadastro
 @enduml
