@@ -44,7 +44,15 @@ A collection com as rotas da aplicação está na pasta `bruno` na raíz desse p
 
 # Front-end
 
-...
+```bash
+# Instalar dependências
+$ npm i
+```
+
+```bash
+# Rodar o projeto
+$ npm run dev
+```
 
 ## License
 
